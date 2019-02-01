@@ -1,5 +1,8 @@
 # Apollo SOAPDataSource
 
+[![CircleCI](https://circleci.com/gh/ovotech/apollo-datasource-soap.svg?style=svg)](https://circleci.com/gh/ovotech/apollo-datasource-soap)
+[![npm (scoped)](https://img.shields.io/npm/v/@ovotech/apollo-datasource-soap.svg)](https://www.npmjs.com/package/@ovotech/apollo-datasource-soap)
+
 SOAPDataSource is responsible for calling a soap client. Integrates with the cache, following the example of [Apollo Data Sources](https://www.apollographql.com/docs/apollo-server/features/data-sources.html).
 
 ### Using
