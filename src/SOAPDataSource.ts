@@ -1,6 +1,6 @@
 import { DataSource, DataSourceConfig } from 'apollo-datasource';
 import { ApolloError } from 'apollo-server-errors';
-import { Client, ISecurity, ISoapMethod } from 'soap';
+import { Client, ISoapMethod } from 'soap';
 import { SOAPCache } from './';
 
 type ClientCreator = () => Promise<Client>;
@@ -30,18 +30,27 @@ export abstract class SOAPDataSource<TContext = any> extends DataSource {
     this.cache = new SOAPCache(config.cache);
   }
 
-  async callFunc<Response = any, Args = any>(method: string, args: Args) {
+  async callFunc<Response = any, Args = any>(method: string, args: Args): Promise<Response> {
     const client = await this.getClient();
     return await this.cacheSoapMethodCall<Response>(method, args, client[method] as ISoapMethod);
   }
 
-  async callFullFunc<Response = any, Args = any>(service: string, port: string, method: string, args: Args) {
+  async callFullFunc<Response = any, Args = any>(
+    service: string,
+    port: string,
+    method: string,
+    args: Args,
+  ): Promise<Response> {
     const client = await this.getClient();
     const fullMethod = `${service}.${port}.${method}`;
     return this.cacheSoapMethodCall<Response>(fullMethod, args, client[service][port][method]);
   }
 
-  private async cacheSoapMethodCall<Response = any, Args = any>(method: string, args: Args, soapMethod: ISoapMethod) {
+  private async cacheSoapMethodCall<Response = any, Args = any>(
+    method: string,
+    args: Args,
+    soapMethod: ISoapMethod,
+  ): Promise<Response> {
     try {
       const cached = await this.cache.get({ method, args });
 
