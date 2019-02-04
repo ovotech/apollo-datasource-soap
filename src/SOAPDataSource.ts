@@ -3,7 +3,7 @@ import { ApolloError } from 'apollo-server-errors';
 import { Client, ISoapMethod } from 'soap';
 import { SOAPCache } from './';
 
-type ClientCreator = () => Promise<Client>;
+export type ClientCreator = () => Promise<Client>;
 
 export abstract class SOAPDataSource<TContext = any> extends DataSource {
   cache!: SOAPCache;

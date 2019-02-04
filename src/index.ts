@@ -1,2 +1,2 @@
 export { SOAPCache } from './SOAPCache';
-export { SOAPDataSource } from './SOAPDataSource';
+export { SOAPDataSource, ClientCreator } from './SOAPDataSource';
