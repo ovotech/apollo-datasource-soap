@@ -9,11 +9,11 @@ const wsdlFile = join(__dirname, 'test.wsdl');
 
 class TestSOAPDataSource extends SOAPDataSource {
   async greet(name: string) {
-    return await this.callFunc('sayHello', { firstName: name });
+    return await this.callSoapMethod('sayHello', { firstName: name });
   }
 
   async greetFull(name: string) {
-    return await this.callFullFunc('Hello_Service', 'Hello_Port', 'sayHello', { firstName: name });
+    return await this.callFullSoapMethod('Hello_Service', 'Hello_Port', 'sayHello', { firstName: name });
   }
 }
 

@@ -30,12 +30,12 @@ export abstract class SOAPDataSource<TContext = any> extends DataSource {
     this.cache = new SOAPCache(config.cache);
   }
 
-  async callFunc<Response = any, Args = any>(method: string, args: Args): Promise<Response> {
+  async callSoapMethod<Response = any, Args = any>(method: string, args: Args): Promise<Response> {
     const client = await this.getClient();
     return await this.cacheSoapMethodCall<Response>(method, args, client[method] as ISoapMethod);
   }
 
-  async callFullFunc<Response = any, Args = any>(
+  async callFullSoapMethod<Response = any, Args = any>(
     service: string,
     port: string,
     method: string,

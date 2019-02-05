@@ -19,11 +19,11 @@ import { createClientAsync } from 'soap';
 
 class MySOAPDataSource extends SOAPDataSource {
   async get() {
-    return await this.callFunc('myFunc', { someArg: 'val' });
+    return await this.callSoapMethod('myFunc', { someArg: 'val' });
   }
 
   async getFull() {
-    return await this.callFullFunc('myService', 'myPort', 'myFunc', { someArg: 'val' });
+    return await this.callFullSoapMethod('myService', 'myPort', 'myFunc', { someArg: 'val' });
   }
 
   async rawClientCall() {

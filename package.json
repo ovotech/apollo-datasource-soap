@@ -1,6 +1,6 @@
 {
   "name": "@ovotech/apollo-datasource-soap",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "SOAPDataSource is responsible for fetching data using soap",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -29,7 +29,6 @@
     "tslint-config-prettier": "^1.15.0",
     "typescript": "^3.0.1",
     "soap": "^0.25.0"
-
   },
   "jest": {
     "transform": {
