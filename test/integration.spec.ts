@@ -13,7 +13,7 @@ class TestSOAPDataSource extends SOAPDataSource {
   }
 
   async greetFull(name: string) {
-    return await this.callFullSoapMethod('Hello_Service', 'Hello_Port', 'sayHello', { firstName: name });
+    return await this.callSoapServiceMethod('Hello_Service', 'Hello_Port', 'sayHello', { firstName: name });
   }
 }
 

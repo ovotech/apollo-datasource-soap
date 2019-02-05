@@ -23,7 +23,7 @@ class MySOAPDataSource extends SOAPDataSource {
   }
 
   async getFull() {
-    return await this.callFullSoapMethod('myService', 'myPort', 'myFunc', { someArg: 'val' });
+    return await this.callSoapServiceMethod('myService', 'myPort', 'myFunc', { someArg: 'val' });
   }
 
   async rawClientCall() {

@@ -1,6 +1,6 @@
 {
   "name": "@ovotech/apollo-datasource-soap",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "SOAPDataSource is responsible for fetching data using soap",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -14,7 +14,8 @@
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "build-cjs": "tsc --outDir dist/cjs/",
     "build-es": "tsc --outDir dist/es/ --module esnext --declaration --declarationDir dist/types/",
-    "build": "yarn build-cjs && yarn build-es"
+    "build": "yarn build-cjs && yarn build-es",
+    "soap": "^0.25.0"
   },
   "devDependencies": {
     "@types/jest": "23.3.3",
@@ -27,8 +28,7 @@
     "ts-jest": "^23.6.0",
     "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.15.0",
-    "typescript": "^3.0.1",
-    "soap": "^0.25.0"
+    "typescript": "^3.0.1"
   },
   "jest": {
     "transform": {

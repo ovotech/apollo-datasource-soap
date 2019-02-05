@@ -1,6 +1,6 @@
 import { DataSource, DataSourceConfig } from 'apollo-datasource';
 import { ApolloError } from 'apollo-server-errors';
-import { Client, ISoapMethod } from 'soap';
+import { Client, ISoapMethod, ISoapServiceMethod } from 'soap';
 import { SOAPCache } from './';
 
 export type ClientCreator = () => Promise<Client>;
@@ -35,7 +35,7 @@ export abstract class SOAPDataSource<TContext = any> extends DataSource {
     return await this.cacheSoapMethodCall<Response>(method, args, client[method] as ISoapMethod);
   }
 
-  async callFullSoapMethod<Response = any, Args = any>(
+  async callSoapServiceMethod<Response = any, Args = any>(
     service: string,
     port: string,
     method: string,
