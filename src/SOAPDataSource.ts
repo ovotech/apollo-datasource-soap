@@ -1,7 +1,7 @@
 import { DataSource, DataSourceConfig } from 'apollo-datasource';
-import { ValueOrPromise } from 'apollo-server-types';
 import { ApolloError } from 'apollo-server-errors';
-import { Client, ISoapMethod, ISoapServiceMethod } from 'soap';
+import { ValueOrPromise } from 'apollo-server-types';
+import { Client, ISoapMethod } from 'soap';
 import { SOAPCache } from './';
 
 export type ClientCreator = () => Promise<Client>;
@@ -31,8 +31,6 @@ export abstract class SOAPDataSource<TContext = any> extends DataSource {
     this.cache = new SOAPCache(config.cache);
   }
 
-  protected willSendRequest?(client: Client): ValueOrPromise<void>;
-
   async callSoapMethod<Response = any, Args = any>(method: string, args: Args): Promise<Response> {
     const client = await this.getClient();
 
@@ -58,6 +56,8 @@ export abstract class SOAPDataSource<TContext = any> extends DataSource {
     const fullMethod = `${service}.${port}.${method}`;
     return this.cacheSoapMethodCall<Response>(fullMethod, args, client[service][port][method]);
   }
+
+  protected willSendRequest?(client: Client): ValueOrPromise<void>;
 
   private async cacheSoapMethodCall<Response = any, Args = any>(
     method: string,
