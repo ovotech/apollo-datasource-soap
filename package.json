@@ -20,7 +20,6 @@
     "soap": "*"
   },
   "dependencies": {
-    "@ovotech/typesafe-get": "^2.0.1",
     "apollo-datasource": "^0.2.2",
     "apollo-server-caching": "^0.2.2",
     "apollo-server-errors": "^2.2.0",
