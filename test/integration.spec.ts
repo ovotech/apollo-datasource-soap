@@ -1,4 +1,5 @@
 import { InMemoryLRUCache } from 'apollo-server-caching';
+import { ApolloError } from 'apollo-server-errors';
 import { readFileSync } from 'fs';
 import { createServer, Server } from 'http';
 import { join } from 'path';
@@ -15,6 +16,10 @@ class TestSOAPDataSource extends SOAPDataSource {
   async greetFull(name: string) {
     return await this.callSoapServiceMethod('Hello_Service', 'Hello_Port', 'sayHello', { firstName: name });
   }
+
+  async greetWithFaultV1_1() {
+    return await this.callSoapMethod('sayHello', { firstName: 'error1_1' });
+  }
 }
 
 let server: Server;
@@ -24,7 +29,17 @@ describe('Soap Data source', () => {
     const helloService = {
       Hello_Service: {
         Hello_Port: {
-          sayHello: args => ({ greeting: `Hello ${args.firstName}` }),
+          sayHello: args => {
+            if (args.firstName === 'error1_1') {
+              throw {
+                Fault: {
+                  faultcode: 'soap:Server',
+                  faultstring: 'There was a fault',
+                },
+              };
+            }
+            return { greeting: `Hello ${args.firstName}` };
+          },
         },
       },
     };
@@ -62,5 +77,27 @@ describe('Soap Data source', () => {
 
     const response = await dataSource.greetFull('test name');
     expect(response).toEqual({ greeting: 'Hello test name' });
+  });
+
+  it('Should not return the SOAP response in the ApolloError', async () => {
+    const dataSource = new TestSOAPDataSource(await soap.createClientAsync(wsdlFile));
+    dataSource.initialize({ cache: new InMemoryLRUCache(), context: {} });
+
+    try {
+      await dataSource.greetWithFaultV1_1();
+      expect(true).toBe(false);
+    } catch (error) {
+      expect(error).toMatchObject(
+        new ApolloError('soap:Server: There was a fault', 'SOAP_DATA_SOURCE', {
+          error: new Error('soap:Server: There was a fault'),
+          method: 'sayHello',
+          args: { firstName: 'error1_1' },
+        }),
+      );
+      expect(error.fault).toMatchObject({
+        faultcode: 'soap:Server',
+        faultstring: 'There was a fault',
+      });
+    }
   });
 });

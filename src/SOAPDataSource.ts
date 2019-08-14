@@ -1,3 +1,4 @@
+import { get } from '@ovotech/typesafe-get';
 import { DataSource, DataSourceConfig } from 'apollo-datasource';
 import { ApolloError } from 'apollo-server-errors';
 import { ValueOrPromise } from 'apollo-server-types';
@@ -78,7 +79,11 @@ export abstract class SOAPDataSource<TContext = any> extends DataSource {
         return response;
       }
     } catch (error) {
-      throw new ApolloError(error.message, 'SOAP_DATA_SOURCE', { error, method, args });
+      throw new ApolloError(error.message, 'SOAP_DATA_SOURCE', {
+        fault: get(error, 'root', 'Envelope', 'Body', 'Fault'),
+        method,
+        args,
+      });
     }
   }
 }

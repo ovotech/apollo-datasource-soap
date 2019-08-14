@@ -78,11 +78,28 @@ describe('S3Cache', () => {
   });
 
   it('Should convert error to apollo error', async () => {
-    client.sayHello.mockImplementationOnce((_, cb) => cb(new Error('problem')));
+    const soapError = {
+      message: 'problem',
+      root: {
+        Envelope: {
+          Body: {
+            Fault: {
+              faultcode: 'soap:Server',
+              faultstring: 'Something went wrong',
+            },
+          },
+        },
+      },
+    };
+
+    client.sayHello.mockImplementationOnce((_, cb) => cb(soapError));
 
     await expect(dataSource.greet('tester')).rejects.toEqual(
       new ApolloError('problem', 'SOAP_DATA_SOURCE', {
-        error: new Error('problem'),
+        fault: {
+          faultcode: 'soap:Server',
+          faultstring: 'Something went wrong',
+        },
         method: 'sayHello',
         args: { firstName: 'tester' },
       }),
