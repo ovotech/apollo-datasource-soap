@@ -3455,7 +3455,7 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
-soap@*:
+soap@*, soap@^0.25.0:
   version "0.25.0"
   resolved "https://registry.yarnpkg.com/soap/-/soap-0.25.0.tgz#deda92e1454e77ac942033cb7ca18b88f57b0abf"
   integrity sha512-1fCilERdB28ImnjWUFUr0pYxRlZyZNR1zu2uSuHdGRPnC0XKyWbvSm0m8Pll8xIYwecaKIu5Bqcp2zKtEcQcrA==

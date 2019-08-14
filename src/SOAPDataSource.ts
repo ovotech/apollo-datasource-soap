@@ -78,7 +78,11 @@ export abstract class SOAPDataSource<TContext = any> extends DataSource {
         return response;
       }
     } catch (error) {
-      throw new ApolloError(error.message, 'SOAP_DATA_SOURCE', { error, method, args });
+      throw new ApolloError(error.message, 'SOAP_DATA_SOURCE', {
+        fault: error && error.root && error.root.Envelope && error.root.Envelope.Body && error.root.Envelope.Body.Fault,
+        method,
+        args,
+      });
     }
   }
 }

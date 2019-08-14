@@ -1,12 +1,12 @@
 {
   "name": "@ovotech/apollo-datasource-soap",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "SOAPDataSource is responsible for fetching data using soap",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
   "source": "src/index.ts",
   "types": "dist/types/index.d.ts",
-  "repository": "git@github.com:ovotech/apollo-datasource-s3.git",
+  "repository": "git@github.com:ovotech/apollo-datasource-soap.git",
   "author": "Ivan Kerin <ikerin@gmail.com>",
   "license": "Apache-2.0",
   "scripts": {
@@ -14,8 +14,16 @@
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "build-cjs": "tsc --outDir dist/cjs/",
     "build-es": "tsc --outDir dist/es/ --module esnext --declaration --declarationDir dist/types/",
-    "build": "yarn build-cjs && yarn build-es",
-    "soap": "^0.25.0"
+    "build": "yarn build-cjs && yarn build-es"
+  },
+  "peerDependencies": {
+    "soap": "*"
+  },
+  "dependencies": {
+    "apollo-datasource": "^0.2.2",
+    "apollo-server-caching": "^0.2.2",
+    "apollo-server-errors": "^2.2.0",
+    "apollo-server-types": "^0.2.1"
   },
   "devDependencies": {
     "@types/jest": "23.3.3",
@@ -25,6 +33,7 @@
     "jest": "^23.6.0",
     "jest-junit": "^3.6.0",
     "prettier": "^1.12.0",
+    "soap": "^0.25.0",
     "ts-jest": "^23.6.0",
     "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.15.0",
@@ -44,14 +53,5 @@
       "node"
     ],
     "testURL": "http://localhost/"
-  },
-  "peerDependencies": {
-    "soap": "*"
-  },
-  "dependencies": {
-    "apollo-datasource": "^0.2.2",
-    "apollo-server-caching": "^0.2.2",
-    "apollo-server-errors": "^2.2.0",
-    "apollo-server-types": "^0.2.1"
   }
 }
