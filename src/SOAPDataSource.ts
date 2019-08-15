@@ -8,6 +8,7 @@ export type ClientCreator = () => Promise<Client>;
 
 export abstract class SOAPDataSource<TContext = any> extends DataSource {
   cache!: SOAPCache;
+  context!: TContext;
   private clientCreator: ClientCreator;
   private client: Client;
 
@@ -28,6 +29,7 @@ export abstract class SOAPDataSource<TContext = any> extends DataSource {
   }
 
   initialize(config: DataSourceConfig<TContext>): void {
+    this.context = config.context;
     this.cache = new SOAPCache(config.cache);
   }
 

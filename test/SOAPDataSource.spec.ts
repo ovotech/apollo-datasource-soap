@@ -24,12 +24,14 @@ const client = {
 
 let dataSource: TestSOAPDataSource;
 
-describe('S3Cache', () => {
+describe('SOAPDataSource', () => {
+  const context = {};
+
   beforeEach(() => {
     dataSource = new TestSOAPDataSource(() => client as any);
     dataSource.initialize({
       cache: new InMemoryLRUCache(),
-      context: {},
+      context
     });
   });
 
@@ -106,5 +108,9 @@ describe('S3Cache', () => {
     );
 
     expect(client.sayHello).toHaveBeenCalledTimes(1);
+  });
+
+  it('Keeps the DataSource Context', async () => {
+    expect(Object.is(dataSource.context, context)).toBe(true);
   });
 });
